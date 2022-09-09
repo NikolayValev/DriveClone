@@ -6,7 +6,8 @@ import { useDebounce } from '@/lib/hooks/use-debounce';
 import { useState } from 'react';
 import { DirectoryIcon, SearchIcon } from '@/components/icons';
 import DirectoryResults from './directory-results';
-
+import SettingsIcon from '@mui/icons-material/Settings';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 export default function Directory({
   results,
   totalUsers
@@ -27,6 +28,7 @@ export default function Directory({
   return (
     <aside className="flex-shrink-0 w-full bg-black sm:w-96 h-full overflow-scroll border-r border-gray-800">
       <div className="px-6 pt-6 pb-0 sticky top-0 bg-black z-20">
+        <div className="grid gap-2 grid-cols-3 grid-rows-1">
         <Link href="/">
           <a>
             <div className="bg-dark-accent-1 hover:bg-dark-accent-2 transition-all rounded-2xl h-12 w-12 flex justify-center items-center">
@@ -34,6 +36,21 @@ export default function Directory({
             </div>
           </a>
         </Link>
+        <Link href="/">
+          <a>
+            <div className="bg-dark-accent-1 hover:bg-dark-accent-2 transition-all rounded-2xl h-12 w-12 flex justify-center items-center">
+              <SettingsIcon className="text-white"></SettingsIcon>
+            </div>
+          </a>
+        </Link>
+        <Link href="/">
+          <a>
+            <div className="bg-dark-accent-1 hover:bg-dark-accent-2 transition-all rounded-2xl h-12 w-12 flex justify-center items-center">
+              <PermIdentityIcon className="text-white" />
+            </div>
+          </a>
+        </Link>
+        </div>
         <p className="mt-8 text-2xl text-white font-bold">Directory</p>
         <p className="mt-2 text-sm text-dark-accent-5">
           Search directory of {Intl.NumberFormat('en-us').format(totalUsers)}{' '}
