@@ -48,7 +48,7 @@ export default function Navbar({
             disabled={loading}
             onClick={() => {
               setLoading(true);
-              signIn('github', { callbackUrl: `/profile` });
+              signIn();
             }}
             className={`${
               loading
@@ -56,7 +56,7 @@ export default function Navbar({
                 : 'bg-black hover:bg-white border-black'
             } w-36 h-8 py-1 text-white hover:text-black border rounded-md text-sm transition-all`}
           >
-            {loading ? <LoadingDots color="gray" /> : 'Log in with GitHub'}
+            {loading ? <LoadingDots color="gray" /> : 'Log in'}
           </button>
         ))}
     </nav>
