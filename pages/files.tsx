@@ -6,11 +6,11 @@ import {
   getUserCount,
   getFirstUser
 } from '@/lib/api/user';
-
-export default function Files() {
+import Mount from '@/components/mount';
+export default function Files({ user }: { user: UserProps }) {
 
   return(
-    <div className =" text-gray-700">KUR</div>
+    <Mount user={user} settings={false} />
   )
 }
 export const getStaticProps: GetStaticProps = async () => {

@@ -97,7 +97,7 @@ export default function Profile({
     <div className="min-h-screen pb-20">
       <div>
         <div
-          className={`h-48 w-full lg:h-64 
+          className={`h-48 w-full lg:h-64
           ${getGradient(user.username)}`}
         />
         <div
