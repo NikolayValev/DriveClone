@@ -12,7 +12,7 @@ export default function Custom404() {
         }}
       />
       <h1 className="text-2xl font-light text-white">
-        404 <span className="mx-3 text-4xl">|</span> User Not Found
+        404 <span className="mx-3 text-4xl">|</span> Drive Not Found
       </h1>
     </div>
   );

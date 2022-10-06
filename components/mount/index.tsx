@@ -35,7 +35,8 @@ export default function Mount({
 }) {
   const router = useRouter();
   const { data: session } = useSession();
-  const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [data, setData] = useState({
     username: user.username,
     image: user.image,
@@ -43,63 +44,34 @@ export default function Mount({
     bioMdx: user.bioMdx
   });
 
-  if (data.username !== user.username) {
-    setData(user);
-  }
-
-  const [error, setError] = useState('');
-  const settingsPage =
-    settings ||
-    (router.query.settings === 'true' && router.asPath === '/settings');
-
-  const handleDismiss = useCallback(() => {
-    if (settingsPage) router.replace(`/${user.username}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);
-
-  const handleSave = async () => {
+  const handleLoad = async () => {
     setError('');
-    setSaving(true);
+    setLoading(true);
     try {
-      const response = await fetch('/api/user', {
-        method: 'PUT',
+      // TODO might need to change the headers
+      const response = await fetch('http://localhost:3000/api', {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        }
       });
       if (response.ok) {
-        const bioMdx = await response.json();
+        const directoryContents = await response.json();
         setData({
           ...data,
-          bioMdx
+          directoryContents
         }); // optimistically show updated state for bioMdx
-        router.replace(`/${user.username}`, undefined, { shallow: true });
+        //router.replace(`/${user.username}`, undefined, { shallow: true });
       } else if (response.status === 401) {
-        setError('Not authorized to edit this profile.');
+        setError('Not authorized.');
       } else {
-        setError('Error saving profile.');
+        setError('Error.');
       }
     } catch (error) {
       console.error(error);
     }
-    setSaving(false);
+    setLoading(false);
   };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const onKeyDown = async (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      handleDismiss();
-    } else if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-      await handleSave();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
-  }, [onKeyDown]);
-
   return (
     <div className="min-h-screen pb-20">
       <div>

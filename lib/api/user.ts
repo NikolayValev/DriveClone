@@ -14,6 +14,15 @@ export interface UserProps {
   followers: number;
   verified: boolean;
 }
+export interface DriveProps {
+  name: string;
+  ip_adress: string;
+  port: string;
+  image: string;
+  description: string;
+  followers: number;
+  verified: boolean;
+}
 
 export interface ResultProps {
   _id: string;
@@ -36,10 +45,7 @@ export async function getMdxSource(postContents: string) {
   return mdxSource;
 }
 
-export const placeholderBio = `
-Tincidunt quam neque in cursus viverra orci, dapibus nec tristique. Nullam ut sit dolor consectetur urna, dui cras nec sed. Cursus risus congue arcu aenean posuere aliquam.
-
-Et vivamus lorem pulvinar nascetur non. Pulvinar a sed platea rhoncus ac mauris amet. Urna, sem pretium sit pretium urna, senectus vitae. Scelerisque fermentum, cursus felis dui suspendisse velit pharetra. Augue et duis cursus maecenas eget quam lectus. Accumsan vitae nascetur pharetra rhoncus praesent dictum risus suspendisse.`;
+export const placeholderBio = `idk`;
 
 export async function getUser(username: string): Promise<UserProps | null> {
   const client = await clientPromise;
@@ -123,7 +129,7 @@ export async function searchUser(query: string): Promise<UserProps[]> {
       {
         $search: {
           index: 'name-index',
-          /* 
+          /*
           name-index is a search index as follows:
 
           {
