@@ -12,18 +12,18 @@ import {
   XIcon
 } from '@heroicons/react/outline';
 import Directory from './directory';
-import { ResultProps } from '@/lib/api/user';
+import { ResultProps } from '@/lib/api/drive';
 
 export default function Sidebar({
   sidebarOpen,
   setSidebarOpen,
   results,
-  totalUsers
+  totalDrives
 }: {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
   results: ResultProps[];
-  totalUsers: number;
+  totalDrives: number;
 }) {
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -75,7 +75,7 @@ export default function Sidebar({
                   </button>
                 </div>
               </Transition.Child>
-              <Directory results={results} totalUsers={totalUsers} />
+              <Directory results={results} totalDrives={totalDrives} />
             </Dialog.Panel>
           </Transition.Child>
           <div className="flex-shrink-0 w-14" aria-hidden="true">

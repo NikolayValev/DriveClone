@@ -1,29 +1,33 @@
 import { GetStaticProps } from 'next';
 import Profile from '@/components/profile';
+import Mount from '@/components/mount';
 import {
-  getAllUsers,
-  UserProps,
-  getUserCount,
-  getFirstUser
-} from '@/lib/api/user';
+  getAllDrives,
+  DriveProps,
+  getDriveCount,
+  getFirstDrive
+} from '@/lib/api/drive';
 import { defaultMetaProps } from '@/components/layout/meta';
 import clientPromise from '@/lib/mongodb';
 
-export default function Home({ user }: { user: UserProps }) {
-  return <Profile user={user} settings={false} />;
+export default function Home({ drive }: { drive: DriveProps }) {
+  return <Mount drive={drive} />;
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const results = await getAllUsers();
-  const totalUsers = await getUserCount();
-  const firstUser = await getFirstUser();
+  const results_ = await getAllDrives();
+  const totalDrives_ = await getDriveCount();
+  const firstDrive_ = await getFirstDrive();
 
+  const results = JSON.parse(JSON.stringify(results_));
+  const totalDrives = JSON.parse(JSON.stringify(totalDrives_));
+  const firstDrive = JSON.parse(JSON.stringify(firstDrive_));
   return {
     props: {
       meta: defaultMetaProps,
       results,
-      totalUsers,
-      user: firstUser
+      totalDrives,
+      drive: firstDrive
     },
     revalidate: 10
   };

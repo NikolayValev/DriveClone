@@ -2,7 +2,7 @@ import { useState, ReactNode } from 'react';
 import Sidebar from './sidebar';
 import Navbar from './navbar';
 import Directory from './directory';
-import { ResultProps } from '@/lib/api/user';
+import { ResultProps } from '@/lib/api/drive';
 import Toast from '@/components/layout/toast';
 import Meta, { MetaProps } from '@/components/layout/meta';
 import { useRouter } from 'next/router';
@@ -12,15 +12,15 @@ import ClusterProvisioning from '@/components/layout/cluster-provisioning';
 export default function Layout({
   meta,
   results,
-  totalUsers,
-  username,
+  totalDrives,
+  machine_friendly_name,
   clusterStillProvisioning,
   children
 }: {
   meta: MetaProps;
   results: ResultProps[];
-  totalUsers: number;
-  username?: string;
+  totalDrives: number;
+  machine_friendly_name?: string;
   clusterStillProvisioning?: boolean;
   children: ReactNode;
 }) {
@@ -48,7 +48,7 @@ export default function Layout({
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         results={results}
-        totalUsers={totalUsers}
+        totalDrives={totalDrives}
       />
 
       <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
@@ -60,7 +60,7 @@ export default function Layout({
             {children}
           </main>
           <div className="hidden md:order-first h-screen md:flex md:flex-col">
-            <Directory results={results} totalUsers={totalUsers} />
+            <Directory results={results} totalDrives={totalDrives} />
           </div>
         </div>
       </div>

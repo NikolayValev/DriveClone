@@ -1,4 +1,4 @@
-import { UserProps } from '@/lib/api/user';
+import { DriveProps } from '@/lib/api/drive';
 import { getGradient } from '@/lib/gradients';
 import {
   CheckInCircleIcon,
@@ -27,21 +27,19 @@ import { UploadFile } from '@/components/upload'
 export const profileWidth = 'max-w-5xl mx-auto px-4 sm:px-6 lg:px-8';
 
 export default function Mount({
-  settings,
-  user
+  drive
 }: {
-  settings?: boolean;
-  user: UserProps;
+  drive: DriveProps;
 }) {
   const router = useRouter();
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [data, setData] = useState({
-    username: user.username,
-    image: user.image,
-    bio: user.bio || '',
-    bioMdx: user.bioMdx
+    name: drive.name,
+    image: drive.image,
+    description: drive.description || '',
+    directoryContents: drive.contents //TODO this might be an issue
   });
 
   const handleLoad = async () => {
@@ -72,16 +70,25 @@ export default function Mount({
     }
     setLoading(false);
   };
+  //console.log(drive);
   return (
     <div className="min-h-screen pb-20">
       <div>
-        <Typography color="black" gutterBottom variant="subtitle1" component="div">
-          KUR
-        </Typography>
         <div
           className={`h-48 w-full lg:h-64
-          ${getGradient(user.username)}`}
+          ${getGradient(drive.name)}`}
         />
+      </div>
+      <div>
+        <Typography color="white" gutterBottom variant="h3" component="div">
+          {`Device name: ${drive.name}.`}
+        </Typography>
+        <Typography color="white" gutterBottom variant="h4" component="div">
+          {`Your account: ${drive.user} at ipv4:${drive.ip_address} is listening on port: ${drive.port}`}
+        </Typography>
+        <Typography color="white" gutterBottom variant="body1" component="div">
+          {`${drive.description}.`}
+        </Typography>
       </div>
       <Paper
         sx={{

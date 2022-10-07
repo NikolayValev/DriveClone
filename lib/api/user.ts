@@ -14,16 +14,6 @@ export interface UserProps {
   followers: number;
   verified: boolean;
 }
-export interface DriveProps {
-  name: string;
-  ip_adress: string;
-  port: string;
-  image: string;
-  description: string;
-  followers: number;
-  verified: boolean;
-}
-
 export interface ResultProps {
   _id: string;
   users: UserProps[];
