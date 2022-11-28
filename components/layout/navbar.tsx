@@ -4,7 +4,35 @@ import { LoadingDots } from '@/components/icons';
 import Image from 'next/image';
 import { MenuIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
+/**/
+/*
+spmLongShort::ProcessNewOpens() spmLongShort::ProcessNewOpens()
 
+NAME
+
+        Mount({ drive: DriveProps;})
+          - Encapsulates the high order component Mount.
+
+SYNOPSIS
+
+        Mount({ drive }: { drive: DriveProps; })
+            drive             --> an object with the properties of the directory.
+
+DESCRIPTION
+
+        This function will dispaly the navigation to the profile page when the
+        user is logged in. For dev this is would only show the login because
+        the session object is dependent on the enviroment and would not
+        instantiated the user object correctly. the User colour is randomly
+        generated or username specific to make it easy to navigate users
+        with no profile picture.
+
+RETURNS
+
+        Returns markup of precompiled HTML elements and the bootstrapped
+        logic associated with the element.
+*/
+/**/
 export default function Navbar({
   setSidebarOpen
 }: {
@@ -27,7 +55,8 @@ export default function Navbar({
         <MenuIcon className="h-6 w-6" aria-hidden="true" />
       </button>
       {status !== 'loading' &&
-        (session?.user ? (
+        (session?.user ?
+        (
           <Link href={`/${session.username}`}>
             <a className="w-8 h-8 rounded-full overflow-hidden">
               <Image

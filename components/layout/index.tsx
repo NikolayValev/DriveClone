@@ -2,7 +2,7 @@ import { useState, ReactNode } from 'react';
 import Sidebar from './sidebar';
 import Navbar from './navbar';
 import Directory from './directory';
-import { ResultProps } from '@/lib/api/drive';
+import { DriveProps } from '@/lib/api/drive';
 import Toast from '@/components/layout/toast';
 import Meta, { MetaProps } from '@/components/layout/meta';
 import { useRouter } from 'next/router';
@@ -18,7 +18,7 @@ export default function Layout({
   children
 }: {
   meta: MetaProps;
-  results: ResultProps[];
+  results: DriveProps[];
   totalDrives: number;
   machine_friendly_name?: string;
   clusterStillProvisioning?: boolean;
@@ -43,7 +43,6 @@ export default function Layout({
 
   return (
     <div className="w-full mx-auto h-screen flex overflow-hidden bg-black">
-      <Meta props={meta} />
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}

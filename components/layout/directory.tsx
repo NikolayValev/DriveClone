@@ -1,4 +1,4 @@
-import { ResultProps, DriveProps } from '@/lib/api/drive';
+import {DriveProps } from '@/lib/api/drive';
 import Link from 'next/link';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetcher';
@@ -8,11 +8,42 @@ import { DirectoryIcon, SearchIcon } from '@/components/icons';
 import DirectoryResults from './directory-results';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+/**/
+/*
+spmLongShort::ProcessNewOpens() spmLongShort::ProcessNewOpens()
+
+NAME
+
+        Mount({ drive: DriveProps;})
+          - Encapsulates the high order component Mount.
+
+SYNOPSIS
+
+        Mount({ drive }: { drive: DriveProps; })
+            drive             --> an object with the properties of the directory.
+
+DESCRIPTION
+
+        This function will attempt to open the trading object a_obj with the
+        specified amount of capital. Before attempting the open, it will
+        apply portfolio constraints. If any of the portfolio constraints are
+        not met, this object will be opened as a phantom.  The constraint
+        may also reduce the amount of capital to be applied.
+
+        The status flags and phantom flag for the object will be set
+        appropriately.
+
+RETURNS
+
+        Returns true if the open was successful and false if it was opened
+        as a phantom.  One of these two cases will always occur.
+*/
+/**/
 export default function Directory({
   results,
   totalDrives
 }: {
-  results: ResultProps[];
+    results: DriveProps[];
   totalDrives: number;
 }) {
   console.log("directory.tsx: ",results)

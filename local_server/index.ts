@@ -1,9 +1,14 @@
+/**
+ * Required External Modules
+ */
+import * as dotenv from "dotenv";
 const express = require('express');
 const bodyParser = require('body-parser');
-const routes = require('./router.js');
+const routes = require('./router.ts');
 const fileUpload = require('express-fileupload');
 
 const app = express();
+dotenv.config();
 
 const APP_PORT =
   (process.env.NODE_ENV === 'test' ? process.env.TEST_APP_PORT : process.env.APP_PORT) || process.env.PORT || '3000';

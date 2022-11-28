@@ -18,7 +18,38 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { MDXRemote } from 'next-mdx-remote';
 
 export const profileWidth = 'max-w-5xl mx-auto px-4 sm:px-6 lg:px-8';
+/**/
+/*
+components::Profile() components::Profile()
 
+NAME
+
+        Profile( {settings?: boolean;user: UserProps;})
+          - Encapsulates the high order component Profile.
+
+SYNOPSIS
+
+        Profile({settings,user}: {settings?: boolean;user: UserProps;}
+            settings             --> an object with the properties for the settings.
+            user             --> an object with the properties of the user.
+
+DESCRIPTION
+
+        This function will attempt to open the trading object a_obj with the
+        specified amount of capital. Before attempting the open, it will
+        apply portfolio constraints. If any of the portfolio constraints are
+        not met, this object will be opened as a phantom.  The constraint
+        may also reduce the amount of capital to be applied.
+
+        The status flags and phantom flag for the object will be set
+        appropriately.
+
+RETURNS
+
+        Returns true if the open was successful and false if it was opened
+        as a phantom.  One of these two cases will always occur.
+*/
+/**/
 export default function Profile({
   settings,
   user
@@ -33,7 +64,7 @@ export default function Profile({
     username: user.username,
     image: user.image,
     bio: user.bio || '',
-    bioMdx: user.bioMdx
+    settings: user.settings
   });
 
   if (data.username !== user.username) {
@@ -168,11 +199,10 @@ export default function Profile({
                 <button
                   key={tab.name}
                   disabled={tab.name !== 'Profile'}
-                  className={`${
-                    tab.name === 'Profile'
+                  className={`${tab.name === 'Profile'
                       ? 'border-white text-white'
                       : 'border-transparent text-gray-400 cursor-not-allowed'
-                  }
+                    }
                     whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm font-mono`}
                 >
                   {tab.name}
@@ -207,9 +237,8 @@ export default function Profile({
             </div>
           </>
         ) : (
-          <article className="mt-3 max-w-2xl text-sm tracking-wider leading-6 text-white font-mono prose prose-headings:text-white prose-a:text-white">
-            <MDXRemote {...data.bioMdx} />
-          </article>
+          <MDXRemote {...data.settings} />
+
         )}
       </div>
 
@@ -218,9 +247,8 @@ export default function Profile({
         <div className="fixed bottom-10 right-10 flex items-center space-x-3">
           <p className="text-sm text-gray-500">{error}</p>
           <button
-            className={`${
-              saving ? 'cursor-not-allowed' : ''
-            } rounded-full border border-[#0070F3] hover:border-2 w-12 h-12 flex justify-center items-center transition-all`}
+            className={`${saving ? 'cursor-not-allowed' : ''
+              } rounded-full border border-[#0070F3] hover:border-2 w-12 h-12 flex justify-center items-center transition-all`}
             disabled={saving}
             onClick={handleSave}
           >

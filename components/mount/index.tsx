@@ -25,12 +25,32 @@ import { FolderGrid } from '@/components/folder'
 import { FileGrid } from '@/components/files'
 import { UploadFile } from '@/components/upload'
 export const profileWidth = 'max-w-5xl mx-auto px-4 sm:px-6 lg:px-8';
+/**/
+/*
+spmLongShort::ProcessNewOpens() spmLongShort::ProcessNewOpens()
 
-export default function Mount({
-  drive
-}: {
-  drive: DriveProps;
-}) {
+NAME
+
+        Mount({ drive: DriveProps;})
+          - Encapsulates the high order component Mount.
+
+SYNOPSIS
+
+        Mount({ drive }: { drive: DriveProps; })
+            drive             --> an object with the properties of the directory.
+
+DESCRIPTION
+
+        This function will open a high order componet mount. It will connect to
+        the backend and keep the page hydrated with the newest data.
+
+RETURNS
+
+        Returns a visual reprisentation of a mount.
+*/
+/**/
+export default function Mount({ drive }: { drive: DriveProps; }) {
+
   const router = useRouter();
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
@@ -41,13 +61,20 @@ export default function Mount({
     description: drive.description || '',
     directoryContents: drive.contents //TODO this might be an issue
   });
+  const [files, setFiles] = useState({
+    path: '',
+    data: Buffer
+  });
+  useEffect(() => {
+    fetchFiles();
+  }, []);
 
   const handleLoad = async () => {
     setError('');
     setLoading(true);
     try {
       // TODO might need to change the headers
-      const response = await fetch('http://localhost:3000/api', {
+      const response = await fetch('http://localhost:7000/load', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -58,8 +85,7 @@ export default function Mount({
         setData({
           ...data,
           directoryContents
-        }); // optimistically show updated state for bioMdx
-        //router.replace(`/${user.username}`, undefined, { shallow: true });
+        });
       } else if (response.status === 401) {
         setError('Not authorized.');
       } else {
@@ -71,6 +97,30 @@ export default function Mount({
     setLoading(false);
   };
   //console.log(drive);
+  async function fetchFiles() {
+    try {
+      // TODO might need to change the headers
+      const response = await fetch('http://localhost:7000/api', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.ok) {
+        const directoryContents = await response.json();
+        const data = directoryContents.paths;
+        console.log(data);
+        setFiles(files => [...files, data]);
+      } else if (response.status === 401) {
+        setError('Not authorized.');
+      } else {
+        setError('Error.');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className="min-h-screen pb-20">
       <div>
@@ -89,6 +139,9 @@ export default function Mount({
         <Typography color="white" gutterBottom variant="body1" component="div">
           {`${drive.description}.`}
         </Typography>
+        <Typography>
+          { }
+        </Typography>
       </div>
       <Paper
         sx={{
@@ -102,18 +155,12 @@ export default function Mount({
         <Typography color="white" gutterBottom variant="subtitle1" component="div">
           Folders
         </Typography>
-        <FolderGrid></FolderGrid>
+        <FolderGrid folders={folders}></FolderGrid>
         <Typography color="white" gutterBottom variant="subtitle1" component="div">
           Files
         </Typography>
-        <FileGrid></FileGrid>
+        <FileGrid contents={files}></FileGrid>
       </Paper>
     </div>
   );
 }
-
-const tabs = [
-  { name: 'Profile' },
-  { name: 'Work History' },
-  { name: 'Contact' }
-];

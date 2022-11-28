@@ -4,17 +4,38 @@ export const defaultMetaProps = {
   title: 'Storage Squire',
   description:
     'Personal destributed storage solution.',
-  ogImage: `https://assets.vercel.com/image/upload/v1654626375/twitter-cards/mongo-integration-starter.png`,
-  ogUrl: 'https://mongodb.vercel.app'
+  ogImage: `/favicon.ico`,
 };
 
 export interface MetaProps {
   title: string;
   description: string;
-  ogUrl: string;
   ogImage: string;
 }
+/**/
+/*
+componets::Meta() componets::Meta()
 
+NAME
+
+        Meta({ props}: { props: MetaProps })
+          - Encapsulates the stateless component Meta.
+
+SYNOPSIS
+
+        Meta({ props })
+            props             --> an object with the properties.
+
+DESCRIPTION
+
+        This function cretes a semantic element for SEO and screen readers with
+        { } attributes. This is a stateless functional component.
+
+RETURNS
+
+        Returns a SEO and screen reader optimization as well as page title and so on.
+*/
+/**/
 export default function Meta({ props }: { props: MetaProps }) {
   return (
     <Head>
@@ -33,7 +54,6 @@ export default function Meta({ props }: { props: MetaProps }) {
       <meta name="description" content={props.description} />
       <meta property="og:title" content={props.title} />
       <meta property="og:description" content={props.description} />
-      <meta property="og:url" content={props.ogUrl} />
       <meta property="og:image" content={props.ogImage} />
       <meta property="og:type" content="website" />
 

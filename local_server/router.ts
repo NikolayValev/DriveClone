@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const fileController = require('./controller.js');
-const validator = require('./validator.js');
+const fileController = require('./controller.ts');
+const validator = require('./validator.ts');
 
 /**
  * GET /api/files
@@ -19,13 +19,8 @@ router.get('/:id', fileController.fetchById);
 router.post('/', validator.fileValidator, fileController.upload);
 
 /**
- * PUT /api/files/:id
- */
-//router.put('/:id', findUser, userValidator, userController.update);
-
-/**
  * DELETE /api/users/:id
  */
-//router.delete('/:id', findUser, userController.deleteUser);
+router.delete('/:id', fileController.deleteFile);
 
 module.exports = router;
