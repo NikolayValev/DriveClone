@@ -15,33 +15,33 @@ import Directory from './directory';
 import { DriveProps } from '@/lib/api/drive';
 /**/
 /*
-spmLongShort::ProcessNewOpens() spmLongShort::ProcessNewOpens()
+components::Sidebar() components::Sidebar()
 
 NAME
 
-        Mount({ drive: DriveProps;})
-          - Encapsulates the high order component Mount.
+        Sidebar({ drive: DriveProps;})
+          - Encapsulates the high order component Sidebar.
 
 SYNOPSIS
 
-        Mount({ drive }: { drive: DriveProps; })
-            drive             --> an object with the properties of the directory.
+        Sidebar({ sidebarOpen: boolean; setSidebarOpen: (open: boolean) => void;
+                  results: DriveProps[]; totalDrives: number;
+                  })
+            sidebarOpen             --> boolean flag if the sidebar is open.
+            setSidebarOpen             --> callback to open the sidebar.
+            results             --> an object with the result directories.
+            totalDrives             --> an array with all directories to be displayed.
 
 DESCRIPTION
 
-        This function will attempt to open the trading object a_obj with the
-        specified amount of capital. Before attempting the open, it will
-        apply portfolio constraints. If any of the portfolio constraints are
-        not met, this object will be opened as a phantom.  The constraint
-        may also reduce the amount of capital to be applied.
-
-        The status flags and phantom flag for the object will be set
-        appropriately.
+        This function will wrap around the navigation betweeen drives and facilitate
+        mobile views. The mobile state closes the sidebar to a hamburger icon that
+        when clicked would expand it and make the screen grayed out untill a selection is made.
 
 RETURNS
 
-        Returns true if the open was successful and false if it was opened
-        as a phantom.  One of these two cases will always occur.
+         Returns markup of precompiled HTML elements and the bootstrapped
+        logic associated with the element.
 */
 /**/
 export default function Sidebar({
@@ -116,22 +116,3 @@ export default function Sidebar({
     </Transition.Root>
   );
 }
-
-const navigation = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Teams', href: '#', icon: UserGroupIcon, current: false },
-  { name: 'Directory', href: '#', icon: SearchCircleIcon, current: true },
-  { name: 'Announcements', href: '#', icon: SpeakerphoneIcon, current: false },
-  { name: 'Office Map', href: '#', icon: MapIcon, current: false }
-];
-const secondaryNavigation = [
-  { name: 'Apps', href: '#', icon: ViewGridAddIcon },
-  { name: 'Settings', href: '#', icon: CogIcon }
-];
-
-const user = {
-  name: 'Tom Cook',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-};
