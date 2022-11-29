@@ -10,33 +10,34 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 /**/
 /*
-spmLongShort::ProcessNewOpens() spmLongShort::ProcessNewOpens()
+components::Directory() componets::Directory()
 
 NAME
 
-        Mount({ drive: DriveProps;})
-          - Encapsulates the high order component Mount.
+        Directory({ drive: DriveProps, totalDrives: number;})
+          - Encapsulates the high order component Directory.
 
 SYNOPSIS
 
-        Mount({ drive }: { drive: DriveProps; })
+        Directory({ drive }: { drive: DriveProps; })
             drive             --> an object with the properties of the directory.
+            totalDrives       --> the number of directories.
 
 DESCRIPTION
 
-        This function will attempt to open the trading object a_obj with the
-        specified amount of capital. Before attempting the open, it will
-        apply portfolio constraints. If any of the portfolio constraints are
-        not met, this object will be opened as a phantom.  The constraint
-        may also reduce the amount of capital to be applied.
-
-        The status flags and phantom flag for the object will be set
-        appropriately.
+        This function will use provide the functionality of the side
+        navigation where different drives are displayed. The usage of debounce is
+        necesary because of how users would type in the search bar, so it would not get
+        invoked multiple times, in bursts, it will invoke the callback only after
+        waitTime has passed after the last invocation.The debouncing fits nicely 
+        to soften the filtering inside the <List>: ive set the debounce to
+        200ms wait time.
 
 RETURNS
 
-        Returns true if the open was successful and false if it was opened
-        as a phantom.  One of these two cases will always occur.
+        Returns markup of precompiled HTML elements and the bootstrapped
+        logic associated with the element.
+
 */
 /**/
 export default function Directory({
