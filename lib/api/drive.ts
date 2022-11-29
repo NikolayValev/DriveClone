@@ -60,11 +60,30 @@ export interface DriveProps {
 }
 
 export const placeholderDescription = `idk`;
-/**
- *
- * @param machine_friendly_name
- * @returns
- */
+/**/
+/*
+api::getDrive() api::getDrive()
+
+NAME
+
+        getDrive({ machine_friendly_name: string;})
+          - Get the drive from the DB.
+
+SYNOPSIS
+
+        getDrive({ machine_friendly_name }: { machine_friendly_name: string; })
+            machine_friendly_name             --> the name of the directory.
+
+DESCRIPTION
+
+        This function will fetch the device based on its name.
+
+RETURNS
+
+        Returns Promise of type DriveProps or null if an error occurred .
+*/
+/**/
+
 export async function getDrive(machine_friendly_name: string): Promise<DriveProps | null> {
   const client = await clientPromise;
   const collection = client.db('test').collection('Devices');
@@ -79,10 +98,24 @@ export async function getDrive(machine_friendly_name: string): Promise<DriveProp
     return null;
   }
 }
-/**
- *
- * @returns
- */
+/**/
+/*
+api::getFirstDrive() api::getFirstDrive()
+
+NAME
+
+        getFirstDrive()
+          - Get the first drive from the DB.
+
+DESCRIPTION
+
+        This function will fetch the first device for the home page.
+
+RETURNS
+
+        Returns Promise of type DriveProps or null if an error occurred .
+*/
+/**/
 export async function getFirstDrive(): Promise<DriveProps | null> {
   const client = await clientPromise;
   const collection = client.db('test').collection('Devices');
@@ -115,11 +148,29 @@ export async function getAllDrives(): Promise<ResultProps[]> {
     .toArray();
   return { ...final }
 }
-/**
- *
- * @param query
- * @returns
- */
+/**/
+/*
+api::searchDrive() api::searchDrive()
+
+NAME
+
+        searchDrive({ machine_friendly_name: string;})
+          - Get the drive from the DB.
+
+SYNOPSIS
+
+        searchDrive({ query }: { query: string; })
+            query             --> the name of the directory.
+
+DESCRIPTION
+
+        This function will ffind the device for the search bar.
+
+RETURNS
+
+        Returns Promise of type DriveProps or null if an error occurred .
+*/
+/**/
 export async function searchDrive(query: string): Promise<DriveProps[]> {
   const client = await clientPromise;
   const collection = client.db('test').collection('users');
@@ -128,28 +179,6 @@ export async function searchDrive(query: string): Promise<DriveProps[]> {
       {
         $search: {
           index: 'name-index',
-          /*
-          name-index is a search index as follows:
-
-          {
-            "mappings": {
-              "fields": {
-                "followers": {
-                  "type": "number"
-                },
-                "name": {
-                  "analyzer": "lucene.whitespace",
-                  "searchAnalyzer": "lucene.whitespace",
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-
-          */
           text: {
             query: query,
             path: {
@@ -166,7 +195,6 @@ export async function searchDrive(query: string): Promise<DriveProps[]> {
       {
         $project: {
           _id: 0,
-          emailVerified: 0,
           score: {
             $meta: 'searchScore'
           }
@@ -184,12 +212,30 @@ export async function getDriveCount(): Promise<number> {
   const collection = client.db('test').collection('Devices');
   return await collection.countDocuments();
 }
-/**
- *
- * @param machine_friendly_name
- * @param ip
- * @returns
- */
+/**/
+/*
+api::getDrive() api::getDrive()
+
+NAME
+
+        getDrive({ machine_friendly_name: string, ip: string;})
+          - Get the drive from the DB.
+
+SYNOPSIS
+
+        getDrive({ machine_friendly_name, ip }: { machine_friendly_name: string, ip: string; })
+            machine_friendly_name             --> the name of the directory.
+            ip                                --> the ip of the directory.
+
+DESCRIPTION
+
+        This function will update the ip of a device in case it changed.
+
+RETURNS
+
+        Returns Promise of type DriveProps or null if an error occurred .
+*/
+/**/
 export async function updateDrive(machine_friendly_name: string, ip: string) {
   const client = await clientPromise;
   const collection = client.db('test').collection('users');
@@ -219,13 +265,25 @@ export async function fetchFromLocalServer() {
     console.error(error);
   }
 };
+/**/
+/*
+api::setup() api::setup()
+
+NAME
+
+        setup()
+          - Setsup the GridFS Bucket.
+
+DESCRIPTION
+
+        This function will setup the gridFS Bucket and load up all the prerequisites.
+*/
+/**/
 /**
  *
  * Moved to using a bucket for storage and interaction from the client.
  */
-/*
 async function setup() {
-  //https://dev.to/shubhambattoo/uploading-files-to-mongodb-with-gridfs-and-multer-using-nodejs-5aed
   //connect with the DB
   const client = await clientPromise;
   const database = client.db('test');
@@ -264,7 +322,30 @@ const storage = new GridFsStorage({
 const upload = multer({
   storage
 });
+/**/
+/*
+api::getFiles() api::getFiles()
 
+NAME
+
+        getFiles(req,res)
+          - Get the files from the bucket.
+
+SYNOPSIS
+
+        getFiles({ machine_friendly_name, ip }: { machine_friendly_name: string, ip: string; })
+            req             --> the request browser object.
+            res             --> the response browser object.
+
+DESCRIPTION
+
+        This function will get the contents of the bucket associated wiht the current drive.
+
+RETURNS
+
+        Returns the file descriptors of the contents of the bucket.
+*/
+/**/
 export function getFiles(req, res) {
   if (!storage) {
     console.log("some error occured, check connection to db");
@@ -303,12 +384,31 @@ export function getFiles(req, res) {
     }
   });
 };
-// files/del/:id
-// Delete chunks from the db
+
+/**/
+/*
+api::deletefiles() api::deletefiles()
+
+NAME
+
+        deletefiles(req,res)
+          - Delete chunks from the db.
+
+SYNOPSIS
+
+        deletefiles({ machine_friendly_name, ip }: { machine_friendly_name: string, ip: string; })
+            req             --> the request browser object.
+            res             --> the response browser object.
+
+DESCRIPTION
+
+        This function will delete the file whos id we pass.
+
+*/
+/**/
 export function deletefiles(req: any, res: any) {
   storage.delete(new mongoose.Types.ObjectId(req.params.id), (err, data) => {
     if (err) return res.status(404).json({ err: err.message });
     res.redirect("/");
   });
 }
-*/
