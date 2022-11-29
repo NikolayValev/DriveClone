@@ -3,33 +3,30 @@ import BlurImage from '../blur-image';
 import { DriveProps } from '@/lib/api/drive';
 /**/
 /*
-spmLongShort::ProcessNewOpens() spmLongShort::ProcessNewOpens()
+components::DirectoryResults() componets::DirectoryResults()
 
 NAME
 
-        Mount({ drive: DriveProps;})
-          - Encapsulates the high order component Mount.
+        DirectoryResults({ drive: DriveProps;})
+          - Encapsulates the high order component DirectoryResults.
 
 SYNOPSIS
 
-        Mount({ drive }: { drive: DriveProps; })
+        DirectoryResults({ drive }: { drive: DriveProps; })
             drive             --> an object with the properties of the directory.
 
 DESCRIPTION
 
-        This function will attempt to open the trading object a_obj with the
-        specified amount of capital. Before attempting the open, it will
-        apply portfolio constraints. If any of the portfolio constraints are
-        not met, this object will be opened as a phantom.  The constraint
-        may also reduce the amount of capital to be applied.
-
-        The status flags and phantom flag for the object will be set
-        appropriately.
+        This function will display the card for a directory result. It has the
+        properties of a directory and would be quite easy to change it and add
+        more information. The picture that is used is a random picture
+        generated to make it easier to the eyes to see multiple one after another.
 
 RETURNS
 
-        Returns true if the open was successful and false if it was opened
-        as a phantom.  One of these two cases will always occur.
+        Returns markup of precompiled HTML elements and the bootstrapped
+        logic associated with the element.
+
 */
 /**/
 export default function DirectoryResults({ drives }: { drives: DriveProps[] }) {
