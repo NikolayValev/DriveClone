@@ -17,7 +17,30 @@ let dataRaw: {
   createdOn: string,
   lastModified: string
 }[]
+/**/
+/*
+api::handler() api::handler()
 
+NAME
+
+        handler(req: NextApiRequest, res: NextApiResponse)
+          - Hydrates the View on the dynamically generated path.
+
+SYNOPSIS
+
+        handler(_req: NextApiRequest, res: NextApiResponse)
+            _req             --> the request of the browser.
+            res             --> the response of the browser.
+
+DESCRIPTION
+
+        The function would provide the user context from the backend.
+
+RETURNS
+
+        Returns the res object directly to the browser
+*/
+/**/
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
