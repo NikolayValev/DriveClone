@@ -1,5 +1,30 @@
 import Image, { ImageProps } from 'next/image';
 import { useState, useEffect } from 'react';
+/**/
+/*
+components::BlurImage() components::BlurImage()
+
+NAME
+
+        BlurImage({ props: ImageProps;})
+          - Encapsulates the image component.
+
+SYNOPSIS
+
+        BlurImage({ props }: { props: ImageProps; })
+            props             --> an object with the properties of the image.
+
+DESCRIPTION
+
+        This function will open an image that was passed to it.
+        As it loads its going to be showing as gray and would carry the props for
+        meta and non visible things.
+
+RETURNS
+
+        Returns a visual reprisentation of a blurred image.
+*/
+/**/
 
 export default function BlurImage(props: ImageProps) {
   const [isLoading, setLoading] = useState(true);
