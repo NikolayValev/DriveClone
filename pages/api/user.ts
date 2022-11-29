@@ -1,7 +1,30 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { searchDrive, updateDrive } from 'lib/api/drive';
+import { searchDrive, updateDrive } from 'lib/api/user';
 import { getSession } from 'next-auth/react';
-//import { getMdxSource } from 'lib/api/user';
+/**/
+/*
+api::handler() api::handler()
+
+NAME
+
+        handler(context)
+          - Hydrates the View on the dynamically generated path.
+
+SYNOPSIS
+
+        handler(_req: NextApiRequest, res: NextApiResponse)
+            _req             --> the request of the browser.
+            res             --> the response of the browser.
+
+DESCRIPTION
+
+        The function would provide the user context from the backend.
+
+RETURNS
+
+        Returns the res object directly to the browser
+*/
+/**/
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,7 +32,7 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     try {
-      const result = await searchDrive(req.query.query as string);
+      const result = await searchUser(req.query.query as string);
       return res.status(200).json(result);
     } catch (e: any) {
       console.log(e);
